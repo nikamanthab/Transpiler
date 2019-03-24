@@ -1,5 +1,5 @@
 (function(){
-
+    var co=1;
     var arr = [];
     function filternull(arr){
         var filtered = arr.filter(function (el) {
@@ -54,6 +54,31 @@
         return audio;
     }
     
+    function NoOfQuestions(row){
+        row = filternull(row);
+        let count = 0;
+        for(let i=0;i<row.length;i++){
+            //console.log(row[i]);
+            if(row[i][0]==="*") count++;
+        }
+        return count;
+
+    }
+
+    function getQuestion(row){
+        let c = NoOfQuestions(row);
+        //console.log(c);
+        if(c===1){ 
+            co++;
+            return (co-1)+"."+row[0];
+        }
+        else{
+            co+=c;
+            return `${co-c} to ${co-1}.`+row[0];
+        }
+        //return row[0];
+    }
+
     function genSection(rows){
         //console.log(rows);
         let input;
@@ -71,7 +96,7 @@
             //pushing
             arr.push({
                 input:input,
-                question:row[0],
+                question:getQuestion(row),
                 options:getOptions(row),
                 answer:getAnswers(row),
                 image:getImg(row),
