@@ -47,8 +47,9 @@
     }
     
     function getAudio(row){
+        // console.log("ROW:",row);
         row = filternull(row);
-        var audio = row.splice(2).filter((r)=>{
+        var audio = row.filter((r)=>{
             return String(r).match(/.mp3/);
         })
         return audio;
@@ -80,9 +81,11 @@
     }
 
     function genSection(rows){
-        //console.log(rows);
+        // console.log(rows);
         let input;
-        rows.forEach(row => {
+        let newrows = rows.splice(1);
+        // console.log("yoyotokyo:",rows);
+        newrows.forEach(row => {
             if(row[1]===1){
                 input="radio";
             }
@@ -99,15 +102,17 @@
                 question:getQuestion(row),
                 options:getOptions(row),
                 answer:getAnswers(row),
-                image:getImg(row),
-                audio:getAudio(row)
+                image:getImg(row)
             });
         });
         
-        return arr;
+        return {
+            audio:getAudio(rows[0]),
+            arr
+        };
     }
     
         module.exports.genSection = genSection;
-    })();
+})();
     
     
